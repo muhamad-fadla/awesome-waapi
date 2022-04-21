@@ -1,3 +1,4 @@
+const Knex = require("knex");
 const Build = require("./bin/www");
 const defaultConfig = require("./config");
 const { mergeDeep } = require("./helpers");
@@ -9,6 +10,7 @@ const Container = (newConfig = {}) => {
     return {
         fly() {
             Build(async () => {
+                global.db = await Knex(config.database)
 
             }).then(fastify => {
                 fastify.listen(config.server.port, config.server.host, (er) => {
